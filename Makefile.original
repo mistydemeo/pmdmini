@@ -1,0 +1,48 @@
+include config.mak
+
+# CC = gcc
+LD = g++
+
+# CFLAGS = -O2
+SDL_CFLAGS = `sdl-config --cflags`
+LFLAGS = 
+
+SDL_LIBS = `sdl-config --libs`
+
+FILES = Makefile
+FILES_ORG = README README.ja
+
+ZIPSRC = pmdmini`date +"%y%m%d"`.zip
+TOUCH = touch -t `date +"%m%d0000"`
+
+LIBS = fmgen/libfmgen.a pmdwin/libpmdwin.a
+
+OBJS = sdlplay.o $(LIBS)
+
+TARGET = pmdplay
+
+all : $(TARGET)
+
+$(TARGET) : $(OBJS)
+	$(LD) $(LFLAGS) -o $@ $(OBJS) $(SDL_LIBS)
+
+fmgen/libfmgen.a:
+	cd fmgen ; make 
+
+pmdwin/libpmdwin.a:
+	cd pmdwin ; make 
+
+%.o : %.c
+	$(CC) -c $(CFLAGS) $(SDL_CFLAGS) -o $@ $<
+
+clean :
+	rm -f $(TARGET) $(OBJS)
+
+dist :
+	find . -name ".DS_Store" -exec rm -f {} \;
+	find $(FILES) $(SRCDIR) -exec $(TOUCH) {} \;
+	
+	rm -f $(ZIPSRC)
+	zip -r $(ZIPSRC) $(SRCDIR) $(FILES) $(FILES_ORG)
+
+	
