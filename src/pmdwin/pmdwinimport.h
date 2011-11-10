@@ -10,7 +10,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-//#include "types.h"
+#ifdef __APPLE__
+#include "sys/types.h"
+#endif
 #ifdef ENABLE_COM_INTERFACE
 # include "PCMMusDriver.h"
 #endif
