@@ -81,7 +81,9 @@
 
 typedef unsigned char uchar;
 typedef unsigned short ushort;
-// typedef unsigned int uint;
+#ifndef __ANDROID__
+ typedef unsigned int uint;
+#endif
 #ifndef __cplusplus
 typedef unsigned char bool;
 #endif
