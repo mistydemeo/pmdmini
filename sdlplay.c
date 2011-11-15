@@ -2,8 +2,7 @@
 #include <SDL.h>
 
 #include "pmdmini.h"
-
-#include "pmdwin/pmdwinimport.h"
+#include "pmdwinimport.h"
 
 int audio_on = 0;
 
@@ -34,9 +33,9 @@ int buf_ppos = 0;
 
 short buffer[ BUF_LEN ];
 
-void audio_callback( void *param , Uint8 *data , int len )
+static void audio_callback( void *param , Uint8 *data , int len )
 {
-	int i,j;
+	int i;
 	
 	short *pcm = (short *)data;
 
@@ -58,7 +57,7 @@ void audio_callback( void *param , Uint8 *data , int len )
 // audio hardware functions
 //
 
-int init_audio(void)
+static int init_audio(void)
 {
 	SDL_AudioSpec af;
 
@@ -87,18 +86,21 @@ int init_audio(void)
 	return 0;
 }
 
-void free_audio(void)
+static void free_audio(void)
 {
 	SDL_CloseAudio();
 }
 
 
-void player_screen( void )
+static void player_screen( void )
 {
 	int i,n;
 	int notes[32];
 	
 	n = pmd_get_tracks ( );
+
+	// 画面の制限
+	if (n > 8) n = 8;
 	
 	pmd_get_current_notes( notes , n );
 	
@@ -110,16 +112,12 @@ void player_screen( void )
 		
 }
 
-
-
 //
 // audio renderer
 //
-void player_loop( int len )
-{
 
-	int i,j;
-	
+static void player_loop( int len )
+{
 	int total;
 	int sec,old_sec;
 	int sec_sample;
@@ -175,7 +173,7 @@ void player_loop( int len )
 // path splitter
 //
 
-int split_dir( const char *file , char *dir )
+static int split_dir( const char *file , char *dir )
 {
 	char *p;
 	int len = 0;
@@ -198,8 +196,6 @@ int split_dir( const char *file , char *dir )
 
 int main ( int argc, char *argv[] )
 {
-	FILE *fp;
-	
 	printf( "PMDPLAY on SDL Version 2011-10-21\n" );
 	
 	if ( argc < 2 )
@@ -215,7 +211,24 @@ int main ( int argc, char *argv[] )
 	
 	pmd_init();
 	
-	pmd_play( argv[1] );
+
+	char buf[1024];
+	char *pcmdir = getenv( "HOME" );
+		
+	if (pcmdir)
+	{
+		strcpy(buf,pcmdir);
+		strcat(buf,"/.pmdplay/");
+	}
+	else
+		buf[0] = 0;		
+	
+	if ( pmd_play( argv[1] , buf ) )
+	{
+		printf("File open error\n");
+		free_audio();
+		return 1;
+	}
 	audio_on = 1;
 	
 	player_loop( pmd_length_sec() );

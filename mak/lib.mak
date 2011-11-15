@@ -43,13 +43,13 @@ $(LIB) : $(OBJS)
 	$(AR) r $@ $(OBJS)
 
 $(OBJDIR)/%.o : $(FMGEN_DIR)/%.cpp
-	$(CXX) -c $(FMGEN_CFLAGS) $(CFLAGS) -o $@ $<
+	$(CXX) -o $@ $< -c $(FMGEN_CFLAGS) $(CFLAGS)
 
 $(OBJDIR)/%.o : $(PMDWIN_DIR)/%.cpp
-	$(CXX) -c $(FMGEN_CFLAGS) $(PMDWIN_CFLAGS) $(CFLAGS) -o $@ $<
+	$(CXX)  -o $@ $< -c $(FMGEN_CFLAGS) $(PMDWIN_CFLAGS) $(CFLAGS)
 
 $(OBJDIR)/%.o : $(PMDMINI_DIR)/%.c
-	$(CXX) -c $(FMGEN_CFLAGS) $(PMDWIN_CFLAGS) $(CFLAGS) -o $@ $<
+	$(CXX)  -o $@ $< -c $(FMGEN_CFLAGS) $(PMDWIN_CFLAGS) $(CFLAGS)
 
 
 clean :

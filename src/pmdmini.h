@@ -5,7 +5,7 @@
 void pmd_init(void);
 void pmd_setrate( int freq );
 int pmd_is_pmd( const char *file );
-int pmd_play ( const char *file );
+int pmd_play ( const char *file , char *pcmdir );
 int pmd_length_sec ( void );
 int pmd_loop_sec ( void );
 void pmd_renderer ( short *buf , int len );

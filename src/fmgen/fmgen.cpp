@@ -345,6 +345,10 @@ void Operator::Prepare()
 		case release:
 			SetEGRate(Min(63, rr+ksr));
 			break;
+		case next: // temporal
+			break;
+		case off:  // temporal
+			break;
 		}
 		// LFO
 		ams = amtable[type][amon ? (ms >> 4) & 3 : 0];

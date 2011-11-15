@@ -1233,7 +1233,7 @@ uchar * PMDWIN::rhythmon(QQ *qq, uchar *bx, int al, int *result)
 		for(cl = 0; cl < 11; cl++) {
 			if(al & (1 << cl)) {
 				opna.SetReg(rhydat[cl][0], rhydat[cl][1]);
-				if(dl = rhydat[cl][2] & open_work.rhythmmask) {
+				if((dl = (rhydat[cl][2] & open_work.rhythmmask))) { // no check yet
 					if(dl < 0x80) {
 						opna.SetReg(0x10, dl);
 					} else {
@@ -2724,25 +2724,25 @@ uchar * PMDWIN::ppzrepeat_set(QQ *qq, uchar * si)
 		ax = read_short(si);
 		si += 2;
 		if(ax < 0) {
-			ax = ppz8.PCME_WORK[0].pcmnum[qq->voicenum].size - ax;
+			ax = (int)ppz8.PCME_WORK[0].pcmnum[qq->voicenum].size - ax;
 		}
 		
 		ax2 = read_short(si);
 		si += 2;
 		if(ax2 < 0) {
-			ax2 = ppz8.PCME_WORK[0].pcmnum[qq->voicenum].size - ax;
+			ax2 = (int)ppz8.PCME_WORK[0].pcmnum[qq->voicenum].size - ax;
 		}
 	} else {
 		ax = read_short(si);
 		si += 2;
 		if(ax < 0) {
-			ax = ppz8.PCME_WORK[1].pcmnum[qq->voicenum&0x7f].size - ax;
+			ax = (int)ppz8.PCME_WORK[1].pcmnum[qq->voicenum&0x7f].size - ax;
 		}
 		
 		ax2 = read_short(si);
 		si += 2;
 		if(ax2 < 0) {
-			ax2 = ppz8.PCME_WORK[1].pcmnum[qq->voicenum&0x7f].size - ax2;
+			ax2 = (int)ppz8.PCME_WORK[1].pcmnum[qq->voicenum&0x7f].size - ax2;
 		}
 	}
 	
@@ -2877,14 +2877,14 @@ uchar *PMDWIN::comatz(QQ *qq, uchar *si)
 	
 	if((qq->voicenum & 0x80) == 0) {
 		ppz8.SetLoop(pmdwork.partb, 
-				ppz8.PCME_WORK[0].pcmnum[qq->voicenum].loop_start,
-				ppz8.PCME_WORK[0].pcmnum[qq->voicenum].loop_end);
+				(uint)ppz8.PCME_WORK[0].pcmnum[qq->voicenum].loop_start,
+				(uint)ppz8.PCME_WORK[0].pcmnum[qq->voicenum].loop_end);
 		ppz8.SetSourceRate(pmdwork.partb, 
 				ppz8.PCME_WORK[0].pcmnum[qq->voicenum].rate);
 	} else {
 		ppz8.SetLoop(pmdwork.partb, 
-				ppz8.PCME_WORK[1].pcmnum[qq->voicenum & 0x7f].loop_start,
-				ppz8.PCME_WORK[1].pcmnum[qq->voicenum & 0x7f].loop_end);
+				(uint)ppz8.PCME_WORK[1].pcmnum[qq->voicenum & 0x7f].loop_start,
+				(uint)ppz8.PCME_WORK[1].pcmnum[qq->voicenum & 0x7f].loop_end);
 		ppz8.SetSourceRate(pmdwork.partb, 
 				ppz8.PCME_WORK[1].pcmnum[qq->voicenum & 0x7f].rate);
 	}
@@ -7566,7 +7566,7 @@ int WINAPI PMDWIN::music_load(char *filename)
 	strcpy(current_dir, drive);
 	strcat(current_dir, dir);
 	
-	size = fread(musbuf, 1, sizeof(musbuf), fp);
+	size = (int)fread(musbuf, 1, sizeof(musbuf), fp);
 	result = music_load3(musbuf, size, current_dir);
 	fclose(fp);
 	if(result == PMDWIN_OK || result == WARNING_PPC_ALREADY_LOAD ||
@@ -7922,7 +7922,7 @@ int WINAPI PMDWIN::fgetmemo(char *dest, char *filename, int al)
 				return ERR_OUT_OF_MEMORY;
 			}
 
-			size = fread(mmlbuf, 1, mdata_def*1024, fp);
+			size = (int)fread(mmlbuf, 1, mdata_def*1024, fp);
 			getmemo(dest, mmlbuf, size, al);
 			free(mmlbuf);
 			fclose(fp);

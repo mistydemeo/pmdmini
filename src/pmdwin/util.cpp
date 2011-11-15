@@ -46,7 +46,7 @@ _int64 GetFileSize_s(char *filename)
 	  }
 
 	fseek (fp, 0, SEEK_END);
-	size = ftell (fp);
+	size = (int)ftell (fp);
 	fclose (fp);
 
 	return size;
@@ -349,7 +349,7 @@ char *zen2tohan(char *dest, const char *src)
 		if(_ismbblead(*(uchar *)src2)) {		// ´Á»ú£±¥Ð¥¤¥ÈÌÜ
 			if(*(uchar *)src2 == 0x85 &&
 					*(uchar *)(src2+1) >= 0x40 && *(uchar *)(src2+1) <= 0xfc) {	// 2¥Ð¥¤¥ÈÈ¾³Ñ
-				len = strlen(codetable[*(uchar *)(src2+1) - 0x40]);
+				len = (int)strlen(codetable[*(uchar *)(src2+1) - 0x40]);
 				strncpy(dest, codetable[*(uchar *)(src2+1) - 0x40], len);
 				src2 += 2;
 				dest += len;

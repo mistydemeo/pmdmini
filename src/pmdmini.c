@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "pmdwin/pmdwinimport.h"
+#include "pmdmini.h"
 
 int pmd_length = 0;
 int pmd_loop = 0;
@@ -15,7 +16,7 @@ OPEN_WORK *pmdwork = NULL;
 // path splitter
 //
 
-int pmd_split_dir( const char *file , char *dir )
+static int pmd_split_dir( const char *file , char *dir )
 {
 	char *p;
 	int len = 0;
@@ -75,7 +76,7 @@ int pmd_is_pmd( const char *file )
 	if (!fp)
 		return 0;
 	
-	size = fread(header,1,3,fp);
+	size = (int)fread(header,1,3,fp);
 	
 	fclose(fp);
 
@@ -99,11 +100,11 @@ int pmd_is_pmd( const char *file )
 // エラーであれば0以外を返す
 //
 
-int pmd_play ( const char *file )
+int pmd_play ( const char *file , char *pcmdir )
 {
 	char dir[2048];
 
-	char *path[3];
+	char *path[4];
 	char *current_dir = (char *)"./";
 	
 	if ( ! pmd_is_pmd ( file ) )
@@ -114,13 +115,15 @@ int pmd_play ( const char *file )
 	if ( pmd_split_dir( file , dir ) > 0 )
 	{
 		path[0] = dir;
-		path[1] = current_dir;
-		path[2] = NULL;
+		path[1] = pcmdir;
+		path[2] = current_dir;
+		path[3] = NULL;
 	}
 	else
 	{
 		path[0] = current_dir;
-		path[1] = NULL;
+		path[1] = pcmdir;
+		path[2] = NULL;
 	}
 	
 	setpcmdir( path );
@@ -184,7 +187,6 @@ int pmd_length_sec ( void )
 {
 	return pmd_length / 1000;
 } 
-
 
 int pmd_loop_sec ( void )
 {

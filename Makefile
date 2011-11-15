@@ -5,8 +5,10 @@
 include mak/general.mak
 
 SRC_DIR = src
+SRC_PMDDIR = $(SRC_DIR)/pmdwin
 
 CFLAGS += -I$(SRC_DIR)
+CFLAGS += -I$(SRC_PMDDIR)
 
 SDL_LIBS = `sdl-config --libs`
 SDL_CFLAGS = `sdl-config --cflags`
@@ -43,7 +45,7 @@ $(LIB):
 	make -f Makefile.lib
 
 %.o : %.c
-	$(CXX) -c $(CFLAGS) $(SDL_CFLAGS) -o $@ $<
+	$(CXX) -o $@ $< -c $(CFLAGS) $(SDL_CFLAGS) 
 
 clean :
 	make -f Makefile.lib clean

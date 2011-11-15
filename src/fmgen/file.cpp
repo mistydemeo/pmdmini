@@ -180,7 +180,7 @@ int32 FileIO::Read(void* dest, int32 size)
 	size_t readsize;
 	readsize = fread (dest, 1, size, hfile);
 #endif
-	return readsize;
+	return (int32)readsize;
 }
 
 // ---------------------------------------------------------------------------
@@ -261,7 +261,7 @@ int32 FileIO::Tellp()
 #ifdef WINDOWS
 	return SetFilePointer(hfile, 0, 0, FILE_CURRENT) - lorigin;
 #else
-	return ftell (hfile);
+	return (int32)ftell (hfile);
 #endif
 }
 
