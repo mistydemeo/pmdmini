@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __PMDMINI_H__
 #define __PMDMINI_H__
 
@@ -18,4 +22,8 @@ int pmd_get_tracks( void );
 void pmd_get_current_notes ( int *notes , int len );
 
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif
