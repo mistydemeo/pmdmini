@@ -1,3 +1,5 @@
 doc
-mdxplay
+pmdplay
 obj
+*.a
+*.o
