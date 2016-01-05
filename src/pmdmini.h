@@ -16,7 +16,6 @@ void pmd_renderer ( short *buf , int len );
 void pmd_stop ( void );
 void pmd_get_title( char *dest );
 void pmd_get_compo( char *dest );
-void pmd_setrate( int freq );
 
 int pmd_get_tracks( void );
 void pmd_get_current_notes ( int *notes , int len );
