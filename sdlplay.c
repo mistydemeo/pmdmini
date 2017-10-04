@@ -175,7 +175,7 @@ static void player_loop( int len )
 
 static int split_dir( const char *file , char *dir )
 {
-	char *p;
+	const char *p;
 	int len = 0;
 	
 	p = strrchr( file , '/' );
