@@ -18,7 +18,7 @@ OPEN_WORK *pmdwork = NULL;
 
 static int pmd_split_dir( const char *file , char *dir )
 {
-	char *p;
+	const char *p;
 	int len = 0;
 	
 	p = strrchr( file , '/' );
