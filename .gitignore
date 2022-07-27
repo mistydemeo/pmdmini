@@ -4,3 +4,4 @@ obj
 *.a
 *.o
 *.dylib
+/inherits
