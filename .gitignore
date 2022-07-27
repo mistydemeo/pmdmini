@@ -3,3 +3,4 @@ pmdplay
 obj
 *.a
 *.o
+*.dylib
