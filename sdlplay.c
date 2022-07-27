@@ -190,6 +190,13 @@ static int split_dir( const char *file , char *dir )
 	return len;
 }
 
+static void audio_sig_handle(int sig)
+{
+    pmd_stop();
+    free_audio();
+    exit(0);
+}
+
 //
 // entry point
 //
@@ -210,6 +217,7 @@ int main ( int argc, char *argv[] )
 	}
 	
 	pmd_init();
+	signal(SIGINT, audio_sig_handle);
 	
 
 	char buf[1024];
