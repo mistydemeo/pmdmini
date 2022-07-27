@@ -49,7 +49,7 @@ $(OBJDIR)/%.o : $(PMDWIN_DIR)/%.cpp
 	$(CXX)  -o $@ $< -c $(FMGEN_CFLAGS) $(PMDWIN_CFLAGS) $(CFLAGS)
 
 $(OBJDIR)/%.o : $(PMDMINI_DIR)/%.c
-	$(CXX)  -o $@ $< -c $(FMGEN_CFLAGS) $(PMDWIN_CFLAGS) $(CFLAGS)
+	$(CC)  -o $@ $< -c $(FMGEN_CFLAGS) $(PMDWIN_CFLAGS) $(CFLAGS)
 
 
 clean :
