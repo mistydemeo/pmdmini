@@ -196,7 +196,7 @@ static int split_dir( const char *file , char *dir )
 
 int main ( int argc, char *argv[] )
 {
-	printf( "PMDPLAY on SDL Version 2011-10-21\n" );
+	printf( "PMDPLAY on SDL Version 2022-07-26\n" );
 	
 	if ( argc < 2 )
 	{

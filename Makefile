@@ -10,8 +10,9 @@ SRC_PMDDIR = $(SRC_DIR)/pmdwin
 CFLAGS += -I$(SRC_DIR)
 CFLAGS += -I$(SRC_PMDDIR)
 
-SDL_LIBS = `sdl-config --libs`
-SDL_CFLAGS = `sdl-config --cflags`
+SDL_CONFIG = sdl2-config
+SDL_LIBS = `$(SDL_CONFIG) --libs`
+SDL_CFLAGS = `$(SDL_CONFIG) --cflags`
 
 #
 # definations for packing
