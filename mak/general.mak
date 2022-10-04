@@ -8,5 +8,5 @@ LFLAGS =
 ifdef DEBUG
 CFLAGS = -g -O0
 else
-CFLAGS = -O2
+CFLAGS = -fPIC -O2 -fpermissive
 endif
